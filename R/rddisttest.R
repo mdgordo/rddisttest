@@ -12,10 +12,10 @@
 #' #rddisttest(dataframe$runningvar, 0, .01)
 #' }
 
-rddisttest<-function(RV, C, K=0){
-  freqt<-table(RV)
-  freqdf<-as.data.frame(freqt, stringsAsFactors = FALSE)
+rddisttest<-function(RV, C, W, K=0){
+  freqdf<- aggregate(x = list("Freq" = W), by = list("RV" = RV), FUN = sum)
   freqdf$rank<-1:nrow(freqdf)
+  freqdf$Freq <- round(freqdf$Freq, 0)
   c.rank<-as.numeric(min(freqdf[which(as.numeric(freqdf$RV)>=C),3]))
 
   #Determine frequencies at, below, and above the threshold
